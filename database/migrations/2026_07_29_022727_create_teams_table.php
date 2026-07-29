@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('city');
+            $table->string('abbreviation',5);
+            $table->string('primary_color');
+            $table->string('secondary_color')->nullable();
+            $table->string('stadium')->nullable();
+            $table->year('founded_year')->nullable();
             $table->timestamps();
         });
     }
