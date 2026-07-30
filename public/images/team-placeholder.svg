@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <rect width="800" height="800" rx="80" fill="#07111f"/>
+  <rect x="60" y="60" width="680" height="680" rx="60" fill="#0f1c2c" stroke="#f7b731" stroke-width="12"/>
+  <path d="M400 170L570 300V500L400 630L230 500V300Z" fill="none" stroke="#f7b731" stroke-width="20"/>
+  <path d="M400 250L500 320V450L400 520L300 450V320Z" fill="none" stroke="#f4f7fb" stroke-width="12"/>
+  <circle cx="400" cy="400" r="70" fill="#f7b731"/>
+  <text x="400" y="740" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="700" fill="#f4f7fb">TEAM</text>
+</svg>
