@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,6 +14,7 @@ class TeamController extends Controller
     {
         return view('dashboard', [
             'teams' => Team::latest()->get(),
+            'gamesCount' => Game::count(),
         ]);
     }
 

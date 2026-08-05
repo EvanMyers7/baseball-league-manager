@@ -43,6 +43,7 @@ class GameController extends Controller
             'outs' => 0,
             'balls' => 0,
             'strikes' => 0,
+            'foul_balls' => 0,
             'home_score' => 0,
             'away_score' => 0,
             'status' => 'scheduled',
@@ -64,7 +65,7 @@ class GameController extends Controller
 
     public function show(Game $game)
     {
-        $game->load(['homeTeam', 'awayTeam']);
+        $game->load(['homeTeam', 'awayTeam', 'players']);
 
         return view('games.show', compact('game'));
     }
@@ -80,6 +81,7 @@ class GameController extends Controller
         $outs = $game->outs;
         $balls = $game->balls;
         $strikes = $game->strikes;
+        $foulBalls = $game->foul_balls;
         $homeScore = $game->home_score;
         $awayScore = $game->away_score;
 
@@ -87,26 +89,45 @@ class GameController extends Controller
             case 'single':
             case 'double':
             case 'triple':
-            case 'home-run':
-                $homeScore += ($event === 'home-run' ? 1 : 0);
-                $awayScore += ($event === 'away-run' ? 1 : 0);
                 $balls = 0;
                 $strikes = 0;
+                $foulBalls = 0;
+                break;
+            case 'home-run':
+                $homeScore += 1;
+                $balls = 0;
+                $strikes = 0;
+                $foulBalls = 0;
+                break;
+            case 'away-run':
+                $awayScore += 1;
+                $balls = 0;
+                $strikes = 0;
+                $foulBalls = 0;
                 break;
             case 'walk':
                 $balls = 0;
                 $strikes = 0;
+                $foulBalls = 0;
                 break;
             case 'strikeout':
-                $outs = $outs + 1;
+                $outs += 1;
                 $balls = 0;
                 $strikes = 0;
+                $foulBalls = 0;
+                break;
+            case 'foul':
+                $foulBalls += 1;
+                if ($strikes < 2) {
+                    $strikes += 1;
+                }
                 break;
             case 'inning-end':
                 $outs = 0;
                 $balls = 0;
                 $strikes = 0;
-                $inning = $inning + 1;
+                $foulBalls = 0;
+                $inning += 1;
                 break;
             default:
                 break;
@@ -114,9 +135,10 @@ class GameController extends Controller
 
         if ($outs >= 3) {
             $outs = 0;
-            $inning = $inning + 1;
+            $inning += 1;
             $balls = 0;
             $strikes = 0;
+            $foulBalls = 0;
         }
 
         $game->update([
@@ -126,6 +148,7 @@ class GameController extends Controller
             'outs' => $outs,
             'balls' => $balls,
             'strikes' => $strikes,
+            'foul_balls' => $foulBalls,
             'home_score' => $homeScore,
             'away_score' => $awayScore,
         ]);

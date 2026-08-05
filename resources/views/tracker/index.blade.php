@@ -60,6 +60,23 @@
             </div>
         </div>
 
+        @if($currentGame)
+            <div class="card" style="margin-bottom:18px;">
+                <h2>Current game</h2>
+                <div class="row"><span>Match</span><strong>{{ $currentGame->homeTeam->abbreviation }} {{ $currentGame->home_score }} – {{ $currentGame->away_score }} {{ $currentGame->awayTeam->abbreviation }}</strong></div>
+                <div class="row"><span>Inning</span><strong>{{ $currentGame->inning }} · {{ $currentGame->outs }} Outs</strong></div>
+                <div class="row"><span>Count</span><strong>Balls {{ $currentGame->balls }} · Strikes {{ $currentGame->strikes }} · Fouls {{ $currentGame->foul_balls }}</strong></div>
+                <div class="row"><span>Last play</span><strong>{{ $currentGame->last_play ?? 'Game ready' }}</strong></div>
+                <div class="row"><span>Status</span><strong>{{ ucfirst($currentGame->status) }}</strong></div>
+                <div class="row"><span>Lineup</span><strong>{{ $currentGame->home_lineup ? count($currentGame->home_lineup) : 0 }} home · {{ $currentGame->away_lineup ? count($currentGame->away_lineup) : 0 }} away</strong></div>
+            </div>
+        @else
+            <div class="card" style="margin-bottom:18px;">
+                <h2>Live tracker</h2>
+                <p>No active game is available yet. Create a game from the dashboard and return here to watch the count, outs, and inning live.</p>
+            </div>
+        @endif
+
         <div class="grid">
             <div class="card">
                 <h2>Players by team</h2>

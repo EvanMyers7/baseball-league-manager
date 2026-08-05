@@ -7,9 +7,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TrackerController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [TeamController::class, 'dashboard'])->name('home');
 
 Route::get('/dashboard', [TeamController::class, 'dashboard'])->name('dashboard');
 Route::get('/stats', [StatsController::class, 'index'])->name('stats.index');

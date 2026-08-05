@@ -17,6 +17,7 @@ class Game extends Model
         'outs',
         'balls',
         'strikes',
+        'foul_balls',
         'home_score',
         'away_score',
         'status',

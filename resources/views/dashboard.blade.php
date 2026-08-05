@@ -149,7 +149,7 @@
                 <h2>League Snapshot</h2>
                 <p style="color: var(--muted);">Your league is live. Add teams, manage identities, and keep your season organized.</p>
                 <p><strong>{{ $teams->count() }}</strong> teams tracked</p>
-                <p><strong>0</strong> games scheduled</p>
+                <p><strong>{{ $gamesCount }}</strong> games scheduled</p>
                 <p><a href="{{ route('stats.index') }}" style="color:var(--accent); text-decoration:none; font-weight:700;">Open full stats hub</a></p>
             </div>
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\Player;
 use App\Models\Team;
 
@@ -13,6 +14,11 @@ class TrackerController extends Controller
 
         $players = Player::with('team')->latest()->get();
 
-        return view('tracker.index', compact('teams', 'players'));
+        $currentGame = Game::with(['homeTeam', 'awayTeam', 'players'])
+            ->orderByRaw("status = 'live' desc")
+            ->orderBy('game_date')
+            ->first();
+
+        return view('tracker.index', compact('teams', 'players', 'currentGame'));
     }
 }

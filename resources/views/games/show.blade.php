@@ -48,7 +48,7 @@
                         <div class="score-box">
                             <div class="muted">Inning / Outs</div>
                             <h2 style="margin:6px 0 0; font-size:2rem;">{{ $game->inning }} • {{ $game->outs }} Outs</h2>
-                            <div>Balls {{ $game->balls }} • Strikes {{ $game->strikes }}</div>
+                            <div>Balls {{ $game->balls }} • Strikes {{ $game->strikes }} • Fouls {{ $game->foul_balls }}</div>
                         </div>
                         <div class="score-box">
                             <div class="muted">Away</div>
@@ -93,6 +93,11 @@
                         @csrf
                         <input type="hidden" name="event" value="strikeout">
                         <button type="submit">Strikeout</button>
+                    </form>
+                    <form method="POST" action="{{ route('games.score', $game) }}">
+                        @csrf
+                        <input type="hidden" name="event" value="foul">
+                        <button type="submit">Foul</button>
                     </form>
                     <form method="POST" action="{{ route('games.score', $game) }}">
                         @csrf

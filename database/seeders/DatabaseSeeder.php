@@ -95,6 +95,31 @@ class DatabaseSeeder extends Seeder
             foreach ($rosterData['players'] as $playerData) {
                 $team->players()->create($playerData);
             }
+
+            $benchPositions = ['CF', 'LF', 'RF', '2B', 'SS', 'DH'];
+            foreach ($benchPositions as $index => $position) {
+                $team->players()->create([
+                    'name' => "{$team->abbreviation} Bench {$position}",
+                    'position' => $position,
+                    'jersey_number' => 50 + $index + ($rosterData['team'] * 6),
+                    'pitching_games' => 0,
+                    'pitching_wins' => 0,
+                    'pitching_losses' => 0,
+                    'pitching_era' => 0.00,
+                    'pitching_strikeouts' => 0,
+                    'batting_games' => 110 + ($index * 3),
+                    'batting_avg' => 0.245 + ($index * 0.003),
+                    'batting_home_runs' => 10 + $index,
+                    'batting_rbi' => 35 + ($index * 4),
+                    'batting_hits' => 108 + ($index * 9),
+                    'batting_runs' => 54 + ($index * 5),
+                    'batting_stolen_bases' => 4 + $index,
+                    'fielding_putouts' => 80 + ($index * 10),
+                    'fielding_assists' => 20 + ($index * 6),
+                    'fielding_errors' => 2 + ($index % 2),
+                    'fielding_percentage' => 0.980 + ($index * 0.002),
+                ]);
+            }
         }
 
         $fixtures = [
@@ -121,12 +146,12 @@ class DatabaseSeeder extends Seeder
                 'away_score' => 0,
                 'status' => 'scheduled',
                 'last_play' => 'Game ready',
-                'home_lineup' => $homeTeam->players->pluck('id')->take(3)->toArray(),
-                'away_lineup' => $awayTeam->players->pluck('id')->take(3)->toArray(),
+                'home_lineup' => $homeTeam->players->pluck('id')->take(9)->toArray(),
+                'away_lineup' => $awayTeam->players->pluck('id')->take(9)->toArray(),
             ]);
 
-            $homeRoster = $homeTeam->players->pluck('id')->take(3)->toArray();
-            $awayRoster = $awayTeam->players->pluck('id')->take(3)->toArray();
+            $homeRoster = $homeTeam->players->pluck('id')->take(9)->toArray();
+            $awayRoster = $awayTeam->players->pluck('id')->take(9)->toArray();
             $game->players()->sync([...$homeRoster, ...$awayRoster]);
         }
     }
